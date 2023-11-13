@@ -1,0 +1,126 @@
+<ng-container *ngIf="tableauEnTete?.length != 0">
+    <div class="pointer">
+      <div>
+        <table class="table table-striped">
+            <!-- Entete -->
+          <thead>
+            <tr>
+              <th
+                *ngFor="let enTete of tableauEnTete"
+              >
+              {{enTete.label}}
+
+              </th>
+            </tr>
+          </thead>
+
+          <!-- body -->
+          <tbody>
+            <ng-container *ngFor="let corps of getPagination()">
+              <tr  (click)="recupereLienLigne(corps)">
+                <td *ngFor="let col of colonne">
+                    {{ corps[col] }}
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="tableauDonnee?.length == 0 || (!tableauDonnee && tableauEnTete)">
+              <tr>
+                <td [colSpan]="colonne?.length">
+                  {{ noResult }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Boutons de navigation -->
+
+      <div *ngIf="pagination?.length != 0 && nbrpage != 0">
+        <div class="container-fluid">
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li>
+                    <a
+                    class="page-item"
+                    [ngClass]="{ disabled: pagination[0] == pageParDefaut }"
+                    (click)="gotoFirstPage()"
+                    title="premiere page"
+                    tabindex="0"
+                  ></a>
+                </li>
+                <li>
+                    <a
+                    class="page-link"
+                    [ngClass]="{ disabled: pagination[0] == pageParDefaut }"
+                    (click)="previous()"
+                    title="precedent"
+                    tabindex="0"
+                  >
+                    Page précédente
+                    </a>
+                </li>
+                <li *ngIf="premierePage != pageParDefaut && !paginationAffiche?.includes(premierePage)">
+                    <a
+                    class="page-link"
+                    [ngClass]="{ 'page-actuelle': premierePage == pageParDefaut }"
+                    [title]="'page ' + premierePage"
+                    (click)="gotoFirstPage()"
+                    tabindex="0"
+                    >
+                    {{ premierePage }}
+                     </a>
+                </li>
+                <li *ngIf="(pagination?.length ?? 1 > paginationAffiche?.length ?? 1) && !paginationAffiche?.includes(premierePage)">
+                  <a> … </a>
+                </li>
+                <li *ngFor="let p of this.paginationAffiche">
+                  <a
+                    class="page-link"
+                    [title]="'page ' + p"
+                    (click)="recuperePage(p)"
+                    tabindex="0"
+                  >
+                    {{ p }}
+                </a>
+                </li>
+                <li *ngIf="(pagination?.length ?? 0 > paginationAffiche?.length ?? 0) && !paginationAffiche?.includes(dernierePage)">
+                  <a class="fr-pagination__link fr-displayed-lg"> … </a>
+                </li>
+                <li *ngIf="dernierePage != pageParDefaut && !paginationAffiche?.includes(dernierePage)">
+                  <a class="page-link"
+                    [ngClass]="{ 'page-actuelle': dernierePage == pageParDefaut }"
+                    [title]="'page ' + dernierePage"
+                    (click)="goToLastPage()"
+                    tabindex="0"
+                  >
+                    {{ dernierePage }}
+                </a>
+                </li>
+                <li>
+                  <a class="page-link"
+                    [ngClass]="{
+                      disabled: pagination[pagination.length - 1] == pageParDefaut
+                    }"
+                    (click)="next()"
+                    tabindex="0"
+                    >
+                    Page suivante
+                    </a>
+                </li>
+                <li>
+                  <a class="page-item"
+                    [ngClass]="{ disabled: dernierePage == pageParDefaut }"
+                    (click)="goToLastPage()"
+                    tabindex="0"
+                  ></a>
+                </li>
+              </ul>
+            </nav>
+    
+        </div>
+      </div>
+
+
+    </div>
+  </ng-container>

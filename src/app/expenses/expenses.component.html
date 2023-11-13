@@ -1,0 +1,15 @@
+<!-- Affichage du Tableau de dépenses -->
+
+
+<div class="container-xxl bd-gutter mt-3 my-md-4 bd-layout">
+    <ng-container *ngIf="expensesData.items.length > 0">
+        <app-expenses-list 
+            [expensesDataTable]="expensesData"
+            [isDefaultPaginationPage]="isDefaultPaginationPage"
+        >
+        </app-expenses-list>
+    </ng-container>
+    
+</div>
+
+

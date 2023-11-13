@@ -1,0 +1,60 @@
+<div #myModal class="container">
+    <div class="content">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Expense</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="formContent">
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nature:</label>
+                    <select
+                          class="form-select" aria-label="Default select example"
+                            (change)="changeTypeExpense($event)"
+                            formControlName="nature"
+                          >
+                            <option *ngFor="let type of expesensesType">
+                              {{ type }}
+                            </option>
+                          </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Amount:</label>
+                    <input type="number" class="form-control" formControlName="amount">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Comment:</label>
+                    <input type="text" class="form-control" formControlName="comment">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">purchasedOn:</label>
+                    <input type="date" class="form-control" formControlName="purchasedOn">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">updatedAt:</label>
+                    <input type="date" class="form-control" formControlName="updatedAt">
+                  </div>
+                  <div class="form-group" *ngIf="getTypeExpenseSelected()=='restaurant'" >
+                    <label for="recipient-name" class="col-form-label">invites:</label>
+                    <input type="number" class="form-control" formControlName="invites" [min]="0">
+                  </div>
+                  <div class="form-group" *ngIf="getTypeExpenseSelected()=='trip' ">
+                    <label for="recipient-name" class="col-form-label">distance:</label>
+                    <input type="number" class="form-control" formControlName="distance" [min]="0">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer gap-2 pt-4">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Close</button>
+            
+                <button type="button" [disabled]="!formContent.valid" class="btn btn-primary" (click)="submitForm()" *ngIf="!editMode">Add</button>
+                <button type="button" [disabled]="!formContent.valid" class="btn btn-primary" (click)="editForm()" *ngIf="editMode">Edit</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

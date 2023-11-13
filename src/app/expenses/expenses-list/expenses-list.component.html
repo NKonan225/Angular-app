@@ -1,0 +1,24 @@
+<!-- 
+Affichage du tableau paginé de la liste des dépenses  -->
+
+<div>
+    <div class="d-flex justify-content-between">
+        <h2>Liste des depenses</h2>
+        <button type="button" class="btn btn-primary" (click)="addExpense()">Add expense</button>
+    </div>
+    <app-expenses-add-edit #modal
+        [expense]="expense"
+    >
+
+    </app-expenses-add-edit>
+    
+    <app-simple-datatable 
+        [tableauDonnee]="expensesDataTable.items"
+        [tableauEnTete]="tableauHeader"
+        [nbrElementParPage]="15"
+        (selectedLine)="editExpense($event)"
+        [isDefaultPaginationPage]="isDefaultPaginationPage"
+    >
+    </app-simple-datatable>
+</div>
+
